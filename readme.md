@@ -1,5 +1,5 @@
 <h1 align="center">
- 💸📦 Mercado Livre 📦💸
+ 💸📦 Mercado Livre - Redis 📦💸
 </h1>
 
 <p align="center">
@@ -13,9 +13,9 @@
 # :bookmark_tabs: Sobre o projeto
 Este é um sistema que visa realizar opreações de CRUD a partir de um modelo de dados não relacional criado baseando-se nas transações do Mercado Livre (de maneira simplificada), assim servindo como prática de conexão com bancos de dados não relacionais como MongoDB, Redis e Cassandra.
 
-> - 💡 Atividade 1: ...
-> - 💡 Atividade 2: ...
-> - 💡 Atividade 3: manipular documentos do MongoDB utilizando Python (CRUD de documentos)
+> - 💡 Atividade 1: modelar de forma relacional e não relacional uma biblioteca e o mercado livre
+> - 💡 Atividade 2: implementar as modelagens não relacionais da biblioteca e do mercado livre no MongoDB
+> - 💡 Atividade 3: manipular documentos do MongoDB utilizando Python
 > - 💡 Atividade 4: manipular documentos Chave-Valor no Redis utilizando Python
 > - 💡 Atividade 5: manipular dados no Cassandra utilizando Python
 
@@ -25,9 +25,9 @@ Este é um sistema que visa realizar opreações de CRUD a partir de um modelo d
 
 <details>
   <summary>Instalação de ferramentas e configuração do ambiente</summary>
-  <br>
   Para executar o projeto é preciso que o Python e o Git estejam instalados, além de mais algumas configurações para o uso do Flask, MongoDB, Redis e Cassandra. Para configurar o ambiente virtual, siga o tutorial abaixo:
-
+<br><br>
+ 
 ```bash
 # Verifique se o pip está instalado
 python -m pip --version
@@ -48,7 +48,8 @@ python -m venv venv
 ```
 
 Para ativar o ambiente virtual no Windows, pelo PowerShell, rode `venv\Scripts\activate`, já pelo Linux use `. venv/bin/activate`. Assim que ativado o ambiente, instale as dependências do projeto rodando o seguinte comando pelo terminal:
-
+<br
+ 
 ```bash
 pip install -r requirements.txt
 ```
@@ -60,25 +61,17 @@ Para acessar os recursos do projeto, recomendo utilizar o Insomnia, seguindo a [
 </details>
 
 <details>
-  <summary>Configurando a conexão com os bancos de dados</summary>
-  <br>
-
-<details>
-  <summary>MongoDB</summary>
-  <br>
+  <summary>Configurando a conexão com os bancos de dados (MongoDB e Redis)</summary>
   Para conectar com o Mongo é preciso alterar o usuário e senha no arquivo connectDb em **src/connectDb.py**.
-
+<br><br>
+ 
 ```python
   db = pymongo.MongoClient("mongodb+srv://<user>:<password>@fa-starting-no-sql.6vnsq.mongodb.net/")
 ```
 
-</details>
-
-<details>
-  <summary>Redis </summary>
-  <br>
-  Para conectar com o Redis é preciso alterar o host, port e password no arquivo connectRedis em **src/connectRedis.py**.
-
+  Já para conectar com o Redis é preciso alterar o host, port e password no arquivo connectRedis em **src/connectRedis.py**.
+<br>
+ 
 ```python
   db = redis.Redis(
       host='<host>',
@@ -91,27 +84,10 @@ Para acessar os recursos do projeto, recomendo utilizar o Insomnia, seguindo a [
 </details>
 
 <details>
-  <summary>Cassandra</summary>
-  <br>
-  Para conectar com o Cassandra é preciso alterar o ASTRA_DB_ID, ASTRA_DB_REGION e ASTRA_DB_APPLICATION_TOKEN no arquivo connectCassandra em **src/connectCassandra.py**.
-
-```python
-  ASTRA_DB_ID = '<BD-ID>'
-  ASTRA_DB_REGION = '<DB-REGION>'
-  ASTRA_DB_APPLICATION_TOKEN = '<token>'
-  ASTRA_DB_KEYSPACE = 'mercadolivre'
-  TEST_COLLECTION_NAME = "test"
-```
-
-</details>
-
-</details>
-
-<details>
   <summary>Rodando o Flask </summary>
-  <br>
   Com o ambiente virtual ativado ...
-
+<br><br>
+ 
 ```bash
 python main.py
 ```
@@ -123,57 +99,7 @@ O servidor inciará localmente na porta 5000. Utilize o Insomnia ou o Postman pa
 <span id="demo">
   
 # :desktop_computer: Demonstração  
-Abrindo cada um dos tópicos a seguir é possível observar as entregas feitas para cada atividade:
-
-<details>
- <summary>Atividade 1</summary>
- <br>
- Em breve!
-</details>
- 
-<details>
- <summary>Atividade 2</summary>
- <br>
- Em breve!
-</details>
- 
-<details>
- <summary>Atividade 3</summary>
- <br>
-
-Intruções:
-
-```bash
-1 - pip install pymongo
-2 - pip install dnspython
-```
-
-```python
-import pymongo
-from pprint import pprint
-
-client = pymongo.MongoClient("mongodb+srv://mane:124578895623@branco.3nl94.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-
-global mydb
-mydb = client.mercadolivre
-
-# criar funções de CRUD
-```
-
-</details>
- 
-<details>
- <summary>Atividade 4</b></summary>
- <br>
-Baseado no Modelo Não Relacional criado, selecionar quais coleções podem ser armazenadas no Redis a fim de aumentar a performance do sistema e facilitar a operação das funcionalidades. Novas funcionalidades também podem ser sugeridas.
-> Implementação no Python do acesso ao Redis para inserção, consulta e deleção das chave
-</details>
-
-<details>
- <summary>Atividade 5</b></summary>
- <br>
- Recuperar os dados temporários no Redis e inserir no Cassandra
-</details>
+> Em breve!
 
 <br>
 
