@@ -3,7 +3,7 @@ from bson.objectid import ObjectId
 import src.connectDatabase as connectDB
 
 mongoDB = connectDB.connectToMongoDB()
-productCollection = mongoDB.product
+productCollection = mongoDB.produto
 
 def index():
     response = []
@@ -34,5 +34,5 @@ def update(request):
 def delete(params):
     id = params.get("id")
     productCollection.delete_one({"_id": ObjectId(id)})
-    
+
     return json.dumps({"status": "OK"})

@@ -2,7 +2,7 @@ import simplejson as json
 import src.connectDatabase as connectDB
 
 mongoDB = connectDB.connectToMongoDB()
-userCollection = mongoDB.user
+userCollection = mongoDB.usuario
 
 def index():
     response = []
