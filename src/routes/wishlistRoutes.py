@@ -5,19 +5,17 @@ import src.controllers.wishlistController as wishlistController
 
 wishlist = Blueprint('wishlist', __name__)
 
-
-
-@voucher.route("/create", methods=['POST'])
+@wishlist.route("/addWishlistToRedis", methods=['POST'])
 @cross_origin()
-def create():
-	return wishlistController.create(request)
+def addWishlistToRedis():
+	return wishlistController.addWishlistToRedis(request.args, request)
 
-@voucher.route("/update", methods=['PUT'])
+@wishlist.route("/showWishlist", methods=['PUT'])
 @cross_origin()
-def update():
-	return wishlistController.update(request)
+def showWishlist():
+	return wishlistController.showWishlist(request.args)
 
-@voucher.route("/delete", methods=['DELETE'])
+@wishlist.route("/updateWishlist", methods=['PUT'])
 @cross_origin()
-def delete():
-	return wishlistController.delete(request.args)
+def updateWishlist():
+	return wishlistController.updateWishlist(request.args, request)
