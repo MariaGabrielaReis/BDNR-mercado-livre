@@ -3,7 +3,7 @@ from bson.objectid import ObjectId
 import src.connectDatabase as connectDB
 
 mongoDB = connectDB.connectToMongoDB()
-productCollection = mongoDB.product
+productCollection = mongoDB.produto
 
 def index():
     response = []

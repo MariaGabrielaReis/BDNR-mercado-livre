@@ -3,7 +3,7 @@ from bson.objectid import ObjectId
 import src.connectDatabase as connectDB
 
 mongoDB = connectDB.connectToMongoDB()
-buyCollection = mongoDB.buy
+buyCollection = mongoDB.compra
 
 def show(params):
     id = params.get("id")
