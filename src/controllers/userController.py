@@ -6,8 +6,8 @@ userCollection = mongoDB.user
 
 def index():
     response = []
-    for x in userCollection.find().sort("nome"):
-        response.append({"name": x['nome'], "email": x['email']})
+    for x in userCollection.find().sort("name"):
+        response.append({"name": x['name'], "email": x['email']})
     
     return json.dumps(response)
 
@@ -25,7 +25,7 @@ def create(request):
 
 def update(request):
     updatedUser = request.get_json()
-    updatedUserData = {"$set": {"nome": updatedUser["nome"], "email": updatedUser["email"], "endereco": updatedUser["endereco"]}}
+    updatedUserData = {"$set": {"name": updatedUser["name"], "email": updatedUser["email"], "address": updatedUser["address"]}}
     userCollection.update_one({ "cpf": updatedUser["cpf"] }, updatedUserData)
 
     return json.dumps({"status": "OK"})
