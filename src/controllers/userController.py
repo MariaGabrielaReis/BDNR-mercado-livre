@@ -35,11 +35,24 @@ def addToBag(params, request):
     product = request.get_json()
     user = userCollection.find_one({ "cpf": userCpf })
 
-    newProduct = {"$set": {"_id": product["id"], "name": product["name"], "description": product["description"], "price": product["price"]}}
+    # newProduct = {"$set": {"_id": product["id"], "name": product["name"], "description": product["description"], "price": product["price"]}}
     allProducts = user["bag"]
-    allProducts.append(newProduct)
+    allProducts.append(product)
 
-    user = {"$set": {"bag": newProduct}}
+    user = {"$set": {"bag": allProducts}}
+    userCollection.update_one({ "cpf": userCpf }, user)
+
+    return json.dumps({"status": "OK"})
+
+def addToWishlist(params, request):
+    userCpf = params.get("cpf")
+    product = request.get_json()
+    user = userCollection.find_one({ "cpf": userCpf })
+
+    allProducts = user["wishlist"]
+    allProducts.append(product)
+
+    user = {"$set": {"wishlist": allProducts}}
     userCollection.update_one({ "cpf": userCpf }, user)
 
     return json.dumps({"status": "OK"})

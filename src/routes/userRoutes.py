@@ -30,6 +30,11 @@ def update():
 def addToBag():
 	return userController.addToBag(request.args, request)
 
+@user.route("/addToWishlist", methods=['PUT'])
+@cross_origin()
+def addToWishlist():
+	return userController.addToWishlist(request.args, request)
+
 @user.route("/delete", methods=['DELETE'])
 @cross_origin()
 def delete():
