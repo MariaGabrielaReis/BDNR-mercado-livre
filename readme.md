@@ -99,8 +99,28 @@ O servidor inciará localmente na porta 5000. Utilize o Insomnia ou o Postman pa
 <span id="demo">
   
 # :desktop_computer: Demonstração  
-> Em breve!
+Para esta atividade 4, depois da criação de CRUD de usuários, produtos e compras, pensando na aplicabilidade do Redis e que em e-commerces eu, pessoalmente, utilizo muito da funcionalidade de lista de desejos, acabei agregando este recurso também a este projeto. Abaixo é possível ver o código que trás do MongoDB a lista de desejos de um determinado usuário (identificado pelo seu CPF) e cadastrando no Redis com o identificador `wishlist:<CPF do usuário>`.
+ 
+```python
+def addWishlistToRedis(params):
+  userCpf = params.get("userCpf")
+  user = userCollection.find_one({ "cpf": userCpf })
+  redis.set(f'wishlist:{userCpf}', user['wishlist'])
 
+  return json.dumps({"status": "ok"}) 
+```
+ 
+Já no trecho abaixo é possível resgatar o que foi cadastrado no Redis, também necessitando da passagem do CPF do usuário por parâmetro para realização da busca:
+ 
+```python
+def showWishlist(params):
+  userCpf = params.get("userCpf")  
+
+  try:
+    return json.loads(redis.get(f'wishlist:{userCpf}'))
+  except:
+    return json.dumps({"hasError": True, "Message": "Lista de desejos não encontrada!"})
+```
 <br>
 
 [![image](https://img.shields.io/badge/✨%20Maria%20Gabriela%20Reis,%202022-LinkedIn-009973?style=flat-square)](https://www.linkedin.com/in/mariagabrielareis/)
