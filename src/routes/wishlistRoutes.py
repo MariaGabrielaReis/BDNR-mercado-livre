@@ -8,14 +8,9 @@ wishlist = Blueprint('wishlist', __name__)
 @wishlist.route("/addWishlistToRedis", methods=['POST'])
 @cross_origin()
 def addWishlistToRedis():
-	return wishlistController.addWishlistToRedis(request.args, request)
+	return wishlistController.addWishlistToRedis(request.args)
 
-@wishlist.route("/showWishlist", methods=['PUT'])
+@wishlist.route("/showWishlist", methods=['GET'])
 @cross_origin()
 def showWishlist():
 	return wishlistController.showWishlist(request.args)
-
-@wishlist.route("/updateWishlist", methods=['PUT'])
-@cross_origin()
-def updateWishlist():
-	return wishlistController.updateWishlist(request.args, request)

@@ -1,12 +1,15 @@
-import src.connectDatabase as connectDB
 import json
+import src.connectDatabase as connectDB
+
+mongoDB = connectDB.connectToMongoDB()
+userCollection = mongoDB.usuario
 
 redis = connectDB.connectToRedis()
   
-def addWishlistToRedis(params, request):
+def addWishlistToRedis(params):
   userCpf = params.get("userCpf")
-  wishlist = json.dumps(request.get_json())
-  redis.set(f'wishlist:{userCpf}', wishlist)
+  user = userCollection.find_one({ "cpf": userCpf })
+  redis.set(f'wishlist:{userCpf}', user['wishlist'])
 
   return json.dumps({"status": "ok"})
 
@@ -17,11 +20,4 @@ def showWishlist(params):
     return json.loads(redis.get(f'wishlist:{userCpf}'))
   except:
     return json.dumps({"hasError": True, "Message": "Lista de desejos não encontrada!"})
-
-def updateWishlist(params, request):
-  userCpf = params.get("userCpf")
-  wishlist = json.dumps(request.get_json())
-  redis.set(f'wishlist:{userCpf}', wishlist)
- 
-  return json.dumps({"status": "ok"})
  
