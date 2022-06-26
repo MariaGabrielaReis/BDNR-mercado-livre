@@ -113,7 +113,7 @@ def addWishlistToRedis(params):
 Já no trecho abaixo é possível resgatar o que foi cadastrado no Redis, também necessitando da passagem do CPF do usuário por parâmetro para realização da busca:
  
 ```python
-def showWishlist(params):
+def showRedisWishlist(params):
   userCpf = params.get("userCpf")  
 
   try:
@@ -121,6 +121,16 @@ def showWishlist(params):
   except:
     return json.dumps({"hasError": True, "Message": "Lista de desejos não encontrada!"})
 ```
+ 
+E por fim, há também um recurso para deletar uma coleção do Redis se necessário:
+
+```python
+def deleteWishlistFromRedis(params):
+  userCpf = params.get("userCpf")
+  redis.delete(f'wishlist:{userCpf}')
+
+  return json.dumps({"status": "OK"}) 
+``` 
 <br>
 
 [![image](https://img.shields.io/badge/✨%20Maria%20Gabriela%20Reis,%202022-LinkedIn-009973?style=flat-square)](https://www.linkedin.com/in/mariagabrielareis/)
