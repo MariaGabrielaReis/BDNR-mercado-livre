@@ -13,7 +13,7 @@ def addWishlistToRedis(params):
 
   return json.dumps({"status": "ok"})
 
-def showWishlist(params):
+def showRedisWishlist(params):
   userCpf = params.get("userCpf")  
 
   try:
@@ -21,3 +21,8 @@ def showWishlist(params):
   except:
     return json.dumps({"hasError": True, "Message": "Lista de desejos não encontrada!"})
  
+def deleteWishlistFromRedis(params):
+  userCpf = params.get("userCpf")
+  redis.delete(f'wishlist:{userCpf}')
+
+  return json.dumps({"status": "OK"}) 
