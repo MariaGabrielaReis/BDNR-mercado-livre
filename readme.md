@@ -1,5 +1,5 @@
 <h1 align="center">
- 💸📦 Mercado Livre - Redis 📦💸
+ 💸📦 Mercado Livre - Cassandra 📦💸
 </h1>
 
 <p align="center">
@@ -61,15 +61,15 @@ Para acessar os recursos do projeto, recomendo utilizar o Insomnia, seguindo a [
 </details>
 
 <details>
-  <summary>Configurando a conexão com os bancos de dados (MongoDB e Redis)</summary>
-  Para conectar com o Mongo é preciso alterar o usuário e senha no arquivo connectDb em **src/connectDb.py**.
+  <summary>Configurando a conexão com os bancos de dados (MongoDB, Redis e Cassandra)</summary>
+  Para conectar com o Mongo é preciso alterar o usuário e senha no arquivo connectDatabase em **src/connectDatabase.py**.
 <br><br>
  
 ```python
   db = pymongo.MongoClient("mongodb+srv://<user>:<password>@fa-starting-no-sql.6vnsq.mongodb.net/")
 ```
 
-  Já para conectar com o Redis é preciso alterar o host, port e password no arquivo connectRedis em **src/connectRedis.py**.
+  Já para conectar com o Redis é preciso alterar o host, port e password no arquivo connectDatabase em **src/connectDatabase.py**
 <br>
  
 ```python
@@ -79,6 +79,13 @@ Para acessar os recursos do projeto, recomendo utilizar o Insomnia, seguindo a [
       password='<password>',
       decode_responses=True
     )
+```
+
+ Por fim, para conectar com o Cassandra é preciso alterar o usuário e a senha connectDatabase em **src/connectDatabase.py**
+<br>
+ 
+```python
+  auth_provider = PlainTextAuthProvider('<user>', '<password>')
 ```
 
 </details>
