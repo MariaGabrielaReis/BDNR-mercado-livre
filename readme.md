@@ -54,9 +54,7 @@ Para ativar o ambiente virtual no Windows, pelo PowerShell, rode `venv\Scripts\a
 pip install -r requirements.txt
 ```
 
-Para acessar os recursos do projeto, recomendo utilizar o Insomnia, seguindo a [documentação oficial](https://insomnia.rest/download) para sua instalação, e caso nunca tenha tido contato com essa ferramenta, [acesse este link](https://docs.insomnia.rest/insomnia/send-your-first-request).
-
-> Depois de configurar o Insomnia, importe [esta coleção de requisições]() para consumir a API (caso tenha dúvidas de como importar, [clique aqui](https://docs.insomnia.rest/insomnia/import-export-data))
+Para acessar os recursos do projeto pode-se utilizar o Insomnia ou Postman, por exemplo.
 
 </details>
 
@@ -106,35 +104,42 @@ O servidor inciará localmente na porta 5000. Utilize o Insomnia ou o Postman pa
 <span id="demo">
   
 # :desktop_computer: Demonstração  
-Para esta atividade 4, depois da criação de CRUD de usuários, produtos e compras, pensando na aplicabilidade do Redis e que em e-commerces eu, pessoalmente, utilizo muito da funcionalidade de lista de desejos, acabei agregando este recurso também a este projeto. Abaixo é possível ver o código que trás do MongoDB a lista de desejos de um determinado usuário (identificado pelo seu CPF) e cadastrando no Redis com o identificador `wishlist:<CPF do usuário>`.
+Para esta atividade 5, depois da criação de CRUD de usuários, produtos e compras utilizando Mongo e a criação da funcionalidade de lista de desejos com o Redis, agora é possível obter esses dados do Redis e cadastrá-los no Cassandra, consumindo as seguintes funções:
+ 
+ - Para adicionar a lista de desejos ao Cassandra precisamos que o CPF do usuário dono da wishlist seja passado por parâmetro para a função, que vai buscar os dados no Redis e depois executar uma query para cadastrar tais dados no Cassandra:
  
 ```python
-def addWishlistToRedis(params):
+def addWishlistToCassandra(params):
   userCpf = params.get("userCpf")
-  user = userCollection.find_one({ "cpf": userCpf })
-  redis.set(f'wishlist:{userCpf}', user['wishlist'])
+  redisWishlist = redis.get(f'wishlist:{userCpf}')
 
-  return json.dumps({"status": "ok"}) 
+  cassandra.execute(f'INSERT INTO mercadolivre.wishlist (userCpf, products) VALUES ({userCpf}, {str(redisWishlist)})')
+
+  return json.dumps({"status": "OK"})
 ```
- 
-Já no trecho abaixo é possível resgatar o que foi cadastrado no Redis, também necessitando da passagem do CPF do usuário por parâmetro para realização da busca:
+ - Já no trecho abaixo é possível resgatar o que foi cadastrado no Cassandra, também necessitando da passagem do CPF do usuário por parâmetro para realização da busca:
  
 ```python
-def showRedisWishlist(params):
-  userCpf = params.get("userCpf")  
-
-  try:
-    return json.loads(redis.get(f'wishlist:{userCpf}'))
-  except:
+def showCassandraWishlist(params):
+  userCpf = params.get("userCpf")
+  response = cassandra.execute(f'SELECT * FROM mercadolivre.wishlist WHERE userCpf = {userCpf}')
+  
+  if (not response):
     return json.dumps({"hasError": True, "Message": "Lista de desejos não encontrada!"})
+
+  response = response[0]
+  return json.dumps({
+    "userCpf": response.userCpf,
+    "products": json.dumps({response.products})
+  })
 ```
  
-E por fim, há também um recurso para deletar uma coleção do Redis se necessário:
+- E por fim, há também um recurso para deletar os dados cadastrados no Cassandra se necessário, também recorrendo ao uso do CPF do usuário:
 
 ```python
-def deleteWishlistFromRedis(params):
+def deleteWishlistFromCassandra(params):
   userCpf = params.get("userCpf")
-  redis.delete(f'wishlist:{userCpf}')
+  cassandra.execute(f'DELETE FROM mercadolivre.wishlist WHERE userCpf = {userCpf} IF EXISTS')
 
   return json.dumps({"status": "OK"}) 
 ``` 
