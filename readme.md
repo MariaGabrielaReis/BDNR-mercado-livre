@@ -25,7 +25,7 @@ Este é um sistema que visa realizar opreações de CRUD a partir de um modelo d
 
 <details>
   <summary>Instalação de ferramentas e configuração do ambiente</summary>
-  Para executar o projeto é preciso que o Python e o Git estejam instalados, além de mais algumas configurações para o uso do Flask, MongoDB, Redis e Cassandra. Para configurar o ambiente virtual, siga o tutorial abaixo:
+  Para executar o projeto é preciso que o Python e o Git estejam instalados, além de mais algumas configurações para o uso do Flask, MongoDB e Redis. Para configurar o ambiente virtual, siga o tutorial abaixo:
 <br><br>
  
 ```bash
@@ -54,22 +54,20 @@ Para ativar o ambiente virtual no Windows, pelo PowerShell, rode `venv\Scripts\a
 pip install -r requirements.txt
 ```
 
-Para acessar os recursos do projeto, recomendo utilizar o Insomnia, seguindo a [documentação oficial](https://insomnia.rest/download) para sua instalação, e caso nunca tenha tido contato com essa ferramenta, [acesse este link](https://docs.insomnia.rest/insomnia/send-your-first-request).
-
-> Depois de configurar o Insomnia, importe [esta coleção de requisições]() para consumir a API (caso tenha dúvidas de como importar, [clique aqui](https://docs.insomnia.rest/insomnia/import-export-data))
+Para acessar os recursos do projeto pode-se utilizar o Insomnia ou Postman, por exemplo.
 
 </details>
 
 <details>
   <summary>Configurando a conexão com os bancos de dados (MongoDB e Redis)</summary>
-  Para conectar com o Mongo é preciso alterar o usuário e senha no arquivo connectDb em **src/connectDb.py**.
+  Para conectar com o Mongo é preciso alterar o usuário e senha no arquivo connectDatabase em **src/connectDatabase.py**.
 <br><br>
  
 ```python
   db = pymongo.MongoClient("mongodb+srv://<user>:<password>@fa-starting-no-sql.6vnsq.mongodb.net/")
 ```
 
-  Já para conectar com o Redis é preciso alterar o host, port e password no arquivo connectRedis em **src/connectRedis.py**.
+  Já para conectar com o Redis é preciso alterar o host, port e password no arquivo connectDatabase em **src/connectDatabase.py**.
 <br>
  
 ```python
